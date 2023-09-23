@@ -6,7 +6,7 @@ const scrapper = require('./scrapper');
 const server = http.createServer(async (req, res) => {
   if (req.url === '/getTimeStories' && req.method === 'GET') {
 
-    const data = await scrapper.ScarpData();
+    const data = await scrapper.dataScrapping();
 
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(data));

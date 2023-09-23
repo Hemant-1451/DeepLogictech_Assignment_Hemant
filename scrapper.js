@@ -2,7 +2,7 @@ const https = require('https');
 //To scrape, I have used following URL
 const url = 'https://time.com/';
 // I am sending HTTP GET request here.
-function ScarpData() {
+function dataScrapping() {
   return new Promise((resolve, reject) => {
     https.get(url, (response) => {
       let data = '';
@@ -14,7 +14,7 @@ function ScarpData() {
       response.on('end', () => {
         if (response.statusCode === 200) {
           // Processing the HTML content and resolving the promise with the articles
-          const articles = extractTitles_url(data);
+          const articles = Extraction(data);
           resolve(articles);
         } else {
           console.log('Failed to retrieve web page.');
@@ -27,17 +27,17 @@ function ScarpData() {
     });
   });
 }
-function extractTitles_url(html) {
+function Extraction(html) {
   const regex = /<li class="latest-stories__item">\s*<a\s+href="([^"]+)">\s*<h3 class="latest-stories__item-headline">([^<]+)<\/h3>/g;
   let match;
-  const results = [];
+  const answer = [];
   while ((match = regex.exec(html)) !== null) {
     const title = match[2];
     const link = "https://time.com" + match[1];
-    results.push({ title, link });
+    answer.push({ title, link });
   }
-  return results;
+  return answer;
 }
 module.exports = {
-    ScarpData,
+    dataScrapping,
 };
